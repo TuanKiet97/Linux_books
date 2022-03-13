@@ -1,0 +1,111 @@
+FILE COMMANDS - CÁC LỆNH VỀ FILE
+li - Liệt kê thư mục
+li -al - liệt kê thư mục, cả file ẩn
+cd đường-dẫn-thư-mục - chuyển đến thư mục
+cd - chuyển đến thư mục gốc
+pwd - hiện thị thư mục hiện tại
+mkdir tên-thư-mục - tạo thư mục
+rm filename - xóa file
+rm -f filename - xóa file không cần hỏi
+rm -r thư-mục - xóa thư mục
+rm -rf thư-mục - xóa thư mục, không hỏi
+cp file1 file2 - copy file1 vào file2
+mv file1 file2 - di chuyển file, đổi tên file
+ln -s file link - tạo symbolic link ('link' trỏ đến file)
+touch file - tạo file hoặc cập nhật file
+cat > file - đè nội dung soạn thảo vào file (CTRL+D để ghi lại)
+cat file - hiện thị nội dung file
+more file - hiện thị nội dung file
+less file - hiện thị nội dung file
+head file - hiện thị 10 dòng đầu của file
+tail file - hiện thị 10 dòng cuối của file
+
+KẾT NỐI SSH
+ssh user@host - kết nối đến host với user
+ssh -p port user@host - kết nối có chỉ ra port
+CÀI ĐẶT SOFTWARE
+./configure
+make
+make install
+
+LỆNH VỀ MẠNG - NETWORK
+ping host - ping đến host
+dig domain - lấy thông tin DNS cho domain
+wget file - tải file
+curl --head url - xem phần header của URL
+
+THÔNG TIN HỆ THỐNG
+date - ngày/tháng giờ hiện tại
+cal - lịch tháng hiện tại
+uptime - thời gian hệ thống hoạt động (kể từ khi khởi động)
+w - xem các user đang online trong hệ thống
+whoami - tài khoản đang đăng nhập
+uname -a - thông tin hệ thống linux
+cat /proc/cpuinfo - thông tin CPU
+cat /proc/meminfo - thông tin bộ nhớ
+df - thông tin đĩa cứng
+df -BM - thông tin đĩa cứng
+du - thông tin thư mục
+du -sh - thông tin thư mục
+du --max-depth=1 -B M |sort -rn - thông tin thư mục, xếp theo dung lượng
+free - thông tin bộ nhớ trống và swap
+
+TÌM KIẾM - SEARCHING
+grep 'word' file1 file2 ... - tìm kiếm 'word' trong file1, file2 ...
+grep -rnw '/path/to/somewhere/' -e 'word' - tìm kiếm các file chứa 'word' trong thư mục
+locate "*.png" - tìm vị trí theo tên file
+PROCESS
+top - các tiến trình đang chạy
+ps -aux - các tiến trình đang chạy
+kill -9 PID - dừng tiến trình PID
+killall [process name] - dừng tiến trình
+
+FILE PERMISSION
+chmod octal file - thay đổi permission
+octal con số bát phân (1)(2)(3) thể hiện permision (rwx == read-write-execute)
+chmod 775 file - rw cho owner, rx cho group/world
+chmod 777 file - file rwx cho tất các các user
+chmod -R 755 directory-name/ - thiết lập cho toàn thư mục
+chown -R owner:group file/directory - đổi owner|group của file
+
+NÉN FILE
+tar -cvf /tenfilenen.tar /thu-muc-can-nen - nén thư mực vào .tar
+tar -xvf file-nen.tar - giải nén file .tar
+gzip file - nén file thành file.gz
+gzip -d file.gz - giải nén file.gz
+
+Sử dụng netstat, kiểm tra, thống kê quản lý kết nối mạng
+Kiểm tra các tiến trình, đang lắng nghe trên các cổng
+netstat -ltnp
+Nếu muốn kiểm tra một cổng cụ thể, ví dụ 22
+
+netstat -ltnp | grep -w ':22'
+Kiểm tra tất cả các cổng được mở (kể cả đang không hoạt động - listening)
+netstat -tulpn
+Hiện thị tất cả các loại kết nối (socket)
+netstat -a
+// Chỉ các kết nối TCP, UDP
+netstat -at
+Thông tin thống kế network
+netstat -s
+Thông tin router
+netstat -r
+Hiện thị các IP và số kết nối của IP đến cổng nào đó, ví dụ cổng 443
+netstat -tn | grep ':443 ' | awk '{print $5}' | cut -d: -f1 | sort | uniq -c | sort -nr | head
+Giải thích lệnh:
+
+netstat -tn tham số -t lấy kết nối TCP, -n không phân giải dịch vụ
+grep ':443 ' lọc cổng 443, nếu gộp cả cổng 80 thay bằng grep ':443 \|:80 '
+awk '{print $5}', in cột số 5 thôi (cột IP:PORT)
+cut -d: -f1 chia các dòng kết quả thành các cột, điểm phân chia là ký tự : sau đó lấy thông tin cột 1 (các IP không có cổng)
+sort sắp xếp kết quả
+uniq -c nhóm các IP giống nhau lại (cột đầu số lượng gộp)
+sort -nr sắp xếp kết quả theo số, cao xuống thấp (số kết nối)
+head hiện thị 10 kết quả đầu tiên, bỏ head thì hiện thị hết, head -n thay n bằng số
+Hiện thị số kết nối của mỗi IP đến Server
+netstat -anp |grep 'tcp\|udp' | awk '{print $5}' | cut -d: -f1 | sort | uniq -c | sort -n
+
+
+DOCKER
+
+
